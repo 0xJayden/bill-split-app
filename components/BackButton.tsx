@@ -1,23 +1,18 @@
-import {Dispatch, SetStateAction} from 'react';
-import {Pressable, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from '../Styles';
 
-interface BackButtonProps {
-  open: Dispatch<SetStateAction<boolean>>;
-  close: Dispatch<SetStateAction<boolean>>;
-}
+const BackButton: React.FC = () => {
+  const navigation = useNavigation();
 
-const BackButton: React.FC<BackButtonProps> = ({open, close}) => {
   return (
-    <Pressable
+    <TouchableOpacity
+      className="self-start absolute top-20 left-10 z-10"
       onPress={() => {
-        open(true);
-        close(false);
-      }}
-      style={styles.back}>
-      <Icon name="arrow-back-ios" size={25} style={styles.backText} />
-    </Pressable>
+        navigation.goBack();
+      }}>
+      <Icon name="arrow-back-ios" size={25} color="#00b0d6" />
+    </TouchableOpacity>
   );
 };
 

@@ -1,25 +1,19 @@
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction, useContext, useState} from 'react';
 import {Text, TextInput, View} from 'react-native';
+import {Kind, PartyContext} from '../context/party-context';
 import styles from '../Styles';
+import {ItemType, MemberType} from '../types';
 import CloseButton from './CloseButton';
-import {Items, MemberType, PartyType} from './Party';
-
 interface AddItemProps {
-  items: Items;
-  setParty: Dispatch<SetStateAction<PartyType>>;
-  selectedMember: MemberType;
-  setOpenAddItem: Dispatch<SetStateAction<boolean>>;
+  member: MemberType;
 }
 
-const AddItem: React.FC<AddItemProps> = ({
-  items,
-  setParty,
-  selectedMember,
-  setOpenAddItem,
-}) => {
+const AddItem: React.FC<AddItemProps> = ({member}) => {
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
+
+  const [party, dispatch] = useContext(PartyContext);
 
   const getId = () => {
     const id = Math.floor(Math.random() * 1000);
@@ -27,64 +21,61 @@ const AddItem: React.FC<AddItemProps> = ({
   };
 
   const submitItem = (): void => {
-    const member = selectedMember;
     const id = getId();
 
     if (member.items.find(i => i.id === id)) return submitItem();
 
-    member?.items.push({
+    let newItem = {
       id,
       name: itemName !== '' ? itemName : `item ${id}`,
       price,
       quantity,
-    });
+    };
 
-    setParty(prevParty => {
-      const updatedParty = prevParty.filter(
-        member => member.name !== selectedMember.name,
-      );
+    let subtotal = +(member.results.subTotal + +price * +quantity);
 
-      updatedParty.push(member);
+    let taxOwed = subtotal * (member.results.tax / 100);
 
-      setItemName('');
-      setPrice('');
-      setQuantity('');
+    let total = member.results.tip + subtotal + taxOwed;
 
-      return updatedParty;
-    });
+    dispatch({type: Kind.SetItem, newItem, member});
+    dispatch({type: Kind.SetSubtotal, subtotal, member});
+    dispatch({type: Kind.SetTaxOwed, taxOwed, member});
+    dispatch({type: Kind.SetTotal, total, member});
+    setItemName('');
+    setPrice('');
+    setQuantity('');
   };
 
   return (
-    <View style={[styles.sectionContainer, {marginTop: 0}]}>
-      <View style={{flexDirection: 'row'}}>
-        <TextInput
-          style={[
-            styles.textInput,
-            {padding: 10, width: 100, fontSize: 15, marginRight: 10},
-          ]}
-          onChangeText={text => setItemName(text)}
-          placeholder="item name"
-          value={itemName}
-        />
-        <TextInput
-          keyboardType="numeric"
-          style={[
-            styles.textInput,
-            {padding: 10, width: 100, fontSize: 15, marginRight: 10},
-          ]}
-          onChangeText={text => setQuantity(text)}
-          value={quantity}
-          placeholder="how many?"
-        />
-        <TextInput
-          keyboardType="numeric"
-          style={[styles.textInput, {padding: 10, width: 100, fontSize: 15}]}
-          onChangeText={text => setPrice(text)}
-          value={price}
-          onSubmitEditing={() => submitItem()}
-          placeholder="price"
-        />
-      </View>
+    <View className="flex-row space-x-4">
+      <TextInput
+        className="border-b-cyan-500 border-b bg-gray-900 rounded p-2 min-w-[85px] mt-2 text-gray-200"
+        style={{fontFamily: 'Nunito-Regular'}}
+        onChangeText={text => setItemName(text)}
+        placeholder="Item"
+        placeholderTextColor="gray"
+        value={itemName}
+      />
+      <TextInput
+        keyboardType="numeric"
+        className="border-b-cyan-500 border-b bg-gray-900 rounded p-2 min-w-[85px] mt-2 text-gray-200"
+        style={{fontFamily: 'Nunito-Regular'}}
+        onChangeText={text => setQuantity(text)}
+        value={quantity}
+        placeholder="Quantity"
+        placeholderTextColor="gray"
+      />
+      <TextInput
+        keyboardType="numeric"
+        className="border-b-cyan-500 border-b bg-gray-900 rounded p-2 min-w-[85px] mt-2 text-gray-200"
+        style={{fontFamily: 'Nunito-Regular'}}
+        onChangeText={text => setPrice(text)}
+        value={price}
+        onSubmitEditing={() => submitItem()}
+        placeholder="Price"
+        placeholderTextColor="gray"
+      />
     </View>
   );
 };

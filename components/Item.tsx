@@ -1,42 +1,48 @@
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction, useContext, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
-import styles from '../Styles';
-import {ItemType, MemberType, PartyType} from './Party';
+import {Kind, PartyContext} from '../context/party-context';
+import {ItemType, MemberType, PartyType} from '../types';
 
 interface ItemProps {
   item: ItemType;
-  selectedMember: MemberType;
-  setParty: Dispatch<SetStateAction<PartyType>>;
+  member: MemberType;
 }
 
-const Item: React.FC<ItemProps> = ({item, selectedMember, setParty}) => {
+const Item: React.FC<ItemProps> = ({item, member}) => {
+  const [party, dispatch] = useContext(PartyContext);
+
   return (
-    <View style={styles.memberItemContainer}>
+    <View className="flex-row rounded py-4 px-2 items-center justify-between border-b border-b-cyan-900">
       <Pressable
+        className="mr-2 self-end"
         onPress={() => {
-          setParty(prevParty => {
-            const member = selectedMember;
-
-            const updatedMemberItems = member?.items.filter(
-              i => i.id !== item.id,
-            );
-
-            member.items = updatedMemberItems;
-
-            const updatedParty = prevParty.filter(
-              member => member.name !== selectedMember.name,
-            );
-            updatedParty.push(member);
-            return updatedParty;
-          });
-        }}
-        style={{}}>
-        <Text>X</Text>
+          dispatch({type: Kind.DeleteItem, item, member});
+        }}>
+        <Text className="text-gray-600" style={{fontFamily: 'Nunito-Regular'}}>
+          X
+        </Text>
       </Pressable>
-      <Text style={{width: 80}}>{item.name}</Text>
-      <Text>x{item.quantity}</Text>
-      <Text style={{width: 50, textAlign: 'center'}}>${item.price}</Text>
-      <Text style={{width: 50}}>${+item.price * +item.quantity}</Text>
+      <Text
+        className="text-gray-200 w-1/4"
+        style={{fontFamily: 'Nunito-Regular'}}>
+        {item.name}
+      </Text>
+      <Text
+        className="text-gray-200 w-1/6"
+        style={{fontFamily: 'Nunito-Regular'}}>
+        x{item.quantity}
+      </Text>
+      <View className=" w-1/4 items-end">
+        <Text className="text-gray-200" style={{fontFamily: 'Nunito-Regular'}}>
+          ${(+item.price).toFixed(2)}
+          <Text className="text-gray-600"> ea</Text>
+        </Text>
+      </View>
+      <View className=" w-1/4 items-end">
+        <Text className="text-gray-200" style={{fontFamily: 'Nunito-Regular'}}>
+          ${(+item.price * +item.quantity).toFixed(2)}
+        </Text>
+      </View>
     </View>
   );
 };

@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import db from '../db/db';
 
 type Data = {
   code: number;
