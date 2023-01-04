@@ -1,9 +1,7 @@
-import {Dispatch, SetStateAction, useContext, useState} from 'react';
-import {Text, TextInput, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {TextInput, View} from 'react-native';
 import {Kind, PartyContext} from '../context/party-context';
-import styles from '../Styles';
-import {ItemType, MemberType} from '../types';
-import CloseButton from './CloseButton';
+import {MemberType} from '../types';
 interface AddItemProps {
   member: MemberType;
 }

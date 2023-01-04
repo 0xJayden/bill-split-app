@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useContext, useLayoutEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {StackParamList} from '../types';
+import {StackParamList, Tips} from '../types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import BackButton from '../components/BackButton';
 import {Kind, PartyContext} from '../context/party-context';
@@ -22,6 +22,7 @@ export default function Member({navigation, route}: Props) {
   const [newName, setNewName] = useState('');
   const [notEdit, setNotEdit] = useState(false);
   const [openTip, setOpenTip] = useState(false);
+  const [tips, setTips] = useState<Tips>({});
 
   const [party, dispatch] = useContext(PartyContext);
 
@@ -41,6 +42,18 @@ export default function Member({navigation, route}: Props) {
     return quantity;
   };
 
+  const calculateTip = (percent: number) => {
+    let member = route.params;
+    let total = member.results.total - member.results.tip;
+    let tip = total * percent;
+
+    let newTotal = total + tip;
+
+    tips[percent] = {tip, newTotal};
+
+    return tip.toFixed(2);
+  };
+
   useLayoutEffect(() =>
     navigation.setOptions({
       headerShown: false,
@@ -54,14 +67,99 @@ export default function Member({navigation, route}: Props) {
         <Pressable
           onPress={() => setOpenTip(false)}
           className="h-full w-full absolute items-center justify-center z-10">
-          <View className="rounded bg-gray-900 py-4 px-8 space-y-4">
+          <View className="rounded bg-gray-900 py-4 px-8">
             <Text
-              className="text-3xl text-gray-200 font-bold"
+              className="text-3xl text-gray-200 font-bold text-center mb-4"
               style={{fontFamily: 'Nunito-Regular'}}>
               Add tip
             </Text>
+            <View className="flex-row space-x-4 mb-4">
+              <TouchableOpacity
+                className="items-center bg-gray-800 rounded p-2"
+                onPress={() => {
+                  dispatch({
+                    type: Kind.SetTip,
+                    tip: tips[0.1].tip,
+                    member: route.params,
+                  });
+                  dispatch({
+                    type: Kind.SetTotal,
+                    total: tips[0.1].newTotal,
+                    member: route.params,
+                  });
+                  setOpenTip(false);
+                }}>
+                <Text
+                  className="text-xl text-gray-300"
+                  style={{fontFamily: 'Nunito-Regular'}}>
+                  10%
+                </Text>
+                <Text
+                  className="text-lg text-green-500 text-center"
+                  style={{fontFamily: 'Nunito-Regular'}}>
+                  {'$' + calculateTip(0.1)}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className="items-center bg-gray-800 rounded p-2"
+                onPress={() => {
+                  dispatch({
+                    type: Kind.SetTip,
+                    tip: tips[0.15].tip,
+                    member: route.params,
+                  });
+                  dispatch({
+                    type: Kind.SetTotal,
+                    total: tips[0.15].newTotal,
+                    member: route.params,
+                  });
+                  setOpenTip(false);
+                }}>
+                <Text
+                  className="text-xl text-gray-300"
+                  style={{fontFamily: 'Nunito-Regular'}}>
+                  15%
+                </Text>
+                <Text
+                  className="text-lg text-green-500 text-center"
+                  style={{fontFamily: 'Nunito-Regular'}}>
+                  {'$' + calculateTip(0.15)}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className="items-center bg-gray-800 rounded p-2"
+                onPress={() => {
+                  dispatch({
+                    type: Kind.SetTip,
+                    tip: tips[0.2].tip,
+                    member: route.params,
+                  });
+                  dispatch({
+                    type: Kind.SetTotal,
+                    total: tips[0.2].newTotal,
+                    member: route.params,
+                  });
+                  setOpenTip(false);
+                }}>
+                <Text
+                  className="text-xl text-gray-300"
+                  style={{fontFamily: 'Nunito-Regular'}}>
+                  20%
+                </Text>
+                <Text
+                  className="text-lg text-green-500 text-center"
+                  style={{fontFamily: 'Nunito-Regular'}}>
+                  {'$' + calculateTip(0.2)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Text
+              className="text-xl text-gray-300 text-center"
+              style={{fontFamily: 'Nunito-Regular'}}>
+              Custom:
+            </Text>
             <TextInput
-              className="border-b-cyan-500 text-lg text-center border-b bg-gray-900 rounded p-2 min-w-[85px] mt-2 text-gray-200"
+              className="border-b-cyan-500 text-lg text-center border-b bg-gray-900 rounded p-2 min-w-[85px] text-gray-200"
               style={{fontFamily: 'Nunito-Regular'}}
               placeholder="$0.00"
               placeholderTextColor="gray"
@@ -88,7 +186,7 @@ export default function Member({navigation, route}: Props) {
         onPress={() => setNotEdit(!notEdit)}>
         <Icon
           className="mr-10 border rounded"
-          color="cyan"
+          color="#00b0d6"
           name="edit"
           size={20}
         />
@@ -132,9 +230,9 @@ export default function Member({navigation, route}: Props) {
             className="flex-row items-center space-x-2"
             onPress={() => setOpenTip(!openTip)}>
             {route.params.results.tip === 0 ? (
-              <Icon size={30} color="cyan" name="add" />
+              <Icon size={30} color="#00b0d6" name="add" />
             ) : (
-              <Icon name="edit" size={20} color="cyan" />
+              <Icon name="edit" size={20} color="#00b0d6" />
             )}
             <Text
               className="text-lg text-gray-200"

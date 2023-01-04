@@ -29,3 +29,7 @@ export type StackParamList = {
   Member: MemberType;
   Results: undefined;
 };
+
+export interface Tips {
+  [percent: number]: {tip: number; newTotal: number};
+}
