@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 type Props = NativeStackScreenProps<StackParamList, 'Party'>;
 
 export default function Party({navigation, route}: Props) {
-  const party = useContext(PartyContext);
+  const [party, dispatch] = useContext(PartyContext);
 
   useLayoutEffect(() =>
     navigation.setOptions({
@@ -33,7 +33,7 @@ export default function Party({navigation, route}: Props) {
         </Text>
         <FlatList
           className="max-h-[600px] mb-28"
-          data={party[0]}
+          data={party}
           renderItem={({item}) => (
             <TouchableOpacity
               className="bg-gray-900 rounded mb-4 p-4"
@@ -66,15 +66,15 @@ export default function Party({navigation, route}: Props) {
           navigation.navigate('Results');
         }}
         className="absolute bottom-0 rounded bg-gray-900 justify-center p-2 shadow-md mb-10">
-        <View className="flex-row space-x-2">
+        <View className="flex-row">
           <Icon
             name="check"
             color="green"
-            size={20}
+            size={25}
             style={{alignSelf: 'center'}}
           />
           <Text
-            className="text-xl text-gray-200 text-center"
+            className="text-xl text-gray-200 text-center ml-1"
             style={{fontFamily: 'Nunito-Regular'}}>
             Results
           </Text>

@@ -1,5 +1,5 @@
 import {SafeAreaView, Text, TextInput} from 'react-native';
-import React, {Dispatch, useContext, useLayoutEffect, useState} from 'react';
+import React, {useContext, useLayoutEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
 import {Kind, PartyContext} from '../context/party-context';
@@ -9,7 +9,7 @@ type Props = NativeStackScreenProps<StackParamList, 'HowManyPeople'>;
 export default function HowManyPeople({navigation}: Props) {
   const [amount, setAmount] = useState(0);
 
-  const party = useContext(PartyContext);
+  const [party, dispatch] = useContext(PartyContext);
 
   useLayoutEffect(() =>
     navigation.setOptions({
@@ -33,8 +33,7 @@ export default function HowManyPeople({navigation}: Props) {
         keyboardType="numeric"
         onSubmitEditing={() => {
           if (amount && amount > 0) {
-            const func = party[1];
-            func({type: Kind.SetParty, amount});
+            dispatch({type: Kind.SetParty, amount});
             navigation.navigate('Tax');
           }
         }}

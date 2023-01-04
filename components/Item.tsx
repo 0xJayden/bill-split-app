@@ -1,7 +1,7 @@
-import {Dispatch, SetStateAction, useContext, useState} from 'react';
+import {useContext} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import {Kind, PartyContext} from '../context/party-context';
-import {ItemType, MemberType, PartyType} from '../types';
+import {ItemType, MemberType} from '../types';
 
 interface ItemProps {
   item: ItemType;

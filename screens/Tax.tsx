@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView, TextInput} from 'react-native';
+import {Text, SafeAreaView, TextInput} from 'react-native';
 import React, {useContext, useLayoutEffect, useState} from 'react';
 import {Kind, PartyContext} from '../context/party-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';

@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+import {Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import React, {useLayoutEffect} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import billSplit from '../static/bill-split.png';
