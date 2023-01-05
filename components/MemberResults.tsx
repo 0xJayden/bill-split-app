@@ -2,7 +2,6 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import React, {Dispatch, SetStateAction, useEffect} from 'react';
 import {MemberType} from '../types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Kind} from '../context/party-context';
 
 interface MemberResultsInterface {
   member: MemberType;

@@ -1,5 +1,5 @@
 import {SafeAreaView, Text, TextInput} from 'react-native';
-import React, {useContext, useLayoutEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
 import {Kind, PartyContext} from '../context/party-context';
@@ -11,11 +11,6 @@ export default function HowManyPeople({navigation}: Props) {
 
   const [party, dispatch] = useContext(PartyContext);
 
-  useLayoutEffect(() =>
-    navigation.setOptions({
-      headerShown: false,
-    }),
-  );
   return (
     <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center space-y-4">
       <Text

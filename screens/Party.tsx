@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React, {useContext, useLayoutEffect} from 'react';
+import {useContext} from 'react';
 import {PartyContext} from '../context/party-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
@@ -14,14 +14,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<StackParamList, 'Party'>;
 
-export default function Party({navigation, route}: Props) {
+export default function Party({navigation}: Props) {
   const [party, dispatch] = useContext(PartyContext);
-
-  useLayoutEffect(() =>
-    navigation.setOptions({
-      headerShown: false,
-    }),
-  );
 
   const renderParty: React.FC = () => {
     return (

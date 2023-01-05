@@ -5,7 +5,7 @@ import {
   TextInput,
   FlatList,
 } from 'react-native';
-import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -18,7 +18,7 @@ import MemberResults from '../components/MemberResults';
 
 type Props = NativeStackScreenProps<StackParamList, 'Member'>;
 
-export default function Member({navigation, route}: Props) {
+export default function Member({route}: Props) {
   const [newName, setNewName] = useState('');
   const [notEdit, setNotEdit] = useState(false);
   const [openTip, setOpenTip] = useState(false);
@@ -32,17 +32,10 @@ export default function Member({navigation, route}: Props) {
     setNotEdit(false);
   };
 
-  useLayoutEffect(() =>
-    navigation.setOptions({
-      headerShown: false,
-    }),
-  );
-
   useEffect(() => {
     let member = route.params;
     if (member.items.length === 0) {
       dispatch({type: Kind.SetTotal, total: 0, member});
-      console.log(member.items);
     }
   }, [route.params.items]);
 

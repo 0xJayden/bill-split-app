@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import {useReducer} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -26,11 +26,31 @@ const App = () => {
     <NavigationContainer>
       <PartyContext.Provider value={[party, partyDispatch]}>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="HowManyPeople" component={HowManyPeople} />
-          <Stack.Screen name="Tax" component={Tax} />
-          <Stack.Screen name="Party" component={Party} />
-          <Stack.Screen name="Member" component={Member} />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="HowManyPeople"
+            component={HowManyPeople}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Tax"
+            component={Tax}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Party"
+            component={Party}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Member"
+            component={Member}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="Results"
             component={Results}

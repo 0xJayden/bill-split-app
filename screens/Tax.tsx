@@ -1,5 +1,5 @@
 import {Text, SafeAreaView, TextInput} from 'react-native';
-import React, {useContext, useLayoutEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {Kind, PartyContext} from '../context/party-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
@@ -7,15 +7,9 @@ import BackButton from '../components/BackButton';
 
 type Props = NativeStackScreenProps<StackParamList, 'Tax'>;
 
-export default function Tax({navigation, route}: Props) {
+export default function Tax({navigation}: Props) {
   const [party, dispatch] = useContext(PartyContext);
   const [tax, setTax] = useState(0);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
 
   return (
     <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center space-y-4">

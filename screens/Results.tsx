@@ -1,20 +1,16 @@
 import {View, Text, SafeAreaView, FlatList} from 'react-native';
 import React, {useContext} from 'react';
 import {PartyContext} from '../context/party-context';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {StackParamList} from '../types';
 import BackButton from '../components/BackButton';
 
-type Props = NativeStackScreenProps<StackParamList, 'Results'>;
-
-export default function Results({navigation}: Props) {
+export default function Results() {
   const [party, dispatch] = useContext(PartyContext);
 
-  const totalTax = () => {
-    let tax = 0;
-    party.forEach(m => (tax += m.results.taxOwed));
-    return tax.toFixed(2);
-  };
+  // const totalTax = () => {
+  //   let tax = 0;
+  //   party.forEach(m => (tax += m.results.taxOwed));
+  //   return tax.toFixed(2);
+  // };
 
   const totalTip = () => {
     let tip = 0;
@@ -22,11 +18,11 @@ export default function Results({navigation}: Props) {
     return tip.toFixed(2);
   };
 
-  const totalSubtotal = () => {
-    let subtotal = 0;
-    party.forEach(m => (subtotal += m.results.subTotal));
-    return subtotal.toFixed(2);
-  };
+  // const totalSubtotal = () => {
+  //   let subtotal = 0;
+  //   party.forEach(m => (subtotal += m.results.subTotal));
+  //   return subtotal.toFixed(2);
+  // };
 
   const totalToal = () => {
     let total = 0;
@@ -41,7 +37,7 @@ export default function Results({navigation}: Props) {
   };
 
   return (
-    <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center">
+    <SafeAreaView className="bg-[#002929] items-center flex-1 justify-center">
       <BackButton />
       <Text
         className="text-3xl mt-10 text-gray-200 font-bold"
@@ -90,7 +86,7 @@ export default function Results({navigation}: Props) {
           </View>
         )}
       />
-      <View className="border-green-500 border rounded-md my-2 w-11/12 p-4 shadow-sm">
+      <View className="border-green-400 border rounded-md my-2 w-11/12 p-4 shadow-sm">
         <Text
           className="text-3xl text-gray-200 font-bold text-center mb-4"
           style={{fontFamily: 'Nunito-Regular'}}>
@@ -106,7 +102,7 @@ export default function Results({navigation}: Props) {
             <Text
               className="text-xl text-gray-200 "
               style={{fontFamily: 'Nunito-Regular'}}>
-              Tip: <Text className="text-green-500">${totalTip()}</Text>
+              Tip: <Text className="text-green-400">${totalTip()}</Text>
             </Text>
           </View>
           <View className="items-end">
@@ -118,13 +114,13 @@ export default function Results({navigation}: Props) {
             <Text
               className="text-xl text-gray-200 mb-4"
               style={{fontFamily: 'Nunito-Regular'}}>
-              Total: <Text className="text-green-500">${totalToal()}</Text>
+              Total: <Text className="text-green-400">${totalToal()}</Text>
             </Text>
             <Text
               className="text-xl text-gray-200 "
               style={{fontFamily: 'Nunito-Regular'}}>
               Final Total:{' '}
-              <Text className="text-green-500">${finalTotal()}</Text>
+              <Text className="text-green-400">${finalTotal()}</Text>
             </Text>
           </View>
         </View>
