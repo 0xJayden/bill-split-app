@@ -18,7 +18,7 @@ export default function Tax({navigation, route}: Props) {
   }, []);
 
   return (
-    <SafeAreaView className="bg-gray-800 items-center h-full justify-center space-y-4">
+    <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center space-y-4">
       <BackButton />
       <Text
         className="text-3xl text-gray-200 font-bold"

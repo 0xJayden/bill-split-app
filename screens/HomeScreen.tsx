@@ -15,7 +15,7 @@ export default function HomeScreen({navigation}: Props) {
   }, []);
 
   return (
-    <SafeAreaView className="bg-gray-800 items-center h-full justify-center">
+    <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center">
       <Image className="h-50 w-50 mb-20" source={billSplit} />
       <Text
         className="text-3xl text-gray-200 font-bold"

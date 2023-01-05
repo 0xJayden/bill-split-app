@@ -7,7 +7,7 @@ const BackButton: React.FC = () => {
 
   return (
     <TouchableOpacity
-      className="self-start absolute top-20 left-10 z-10"
+      className="self-start absolute top-10 left-10 z-10"
       onPress={() => {
         navigation.goBack();
       }}>

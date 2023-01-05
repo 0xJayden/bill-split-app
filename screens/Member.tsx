@@ -5,7 +5,7 @@ import {
   TextInput,
   FlatList,
 } from 'react-native';
-import React, {useContext, useLayoutEffect, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -38,8 +38,16 @@ export default function Member({navigation, route}: Props) {
     }),
   );
 
+  useEffect(() => {
+    let member = route.params;
+    if (member.items.length === 0) {
+      dispatch({type: Kind.SetTotal, total: 0, member});
+      console.log(member.items);
+    }
+  }, [route.params.items]);
+
   return (
-    <SafeAreaView className="bg-gray-800 items-center h-full justify-center">
+    <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center">
       <BackButton />
       {openTip && <AddTip setOpenTip={setOpenTip} member={route.params} />}
       <Text

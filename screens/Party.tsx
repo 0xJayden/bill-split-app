@@ -53,7 +53,7 @@ export default function Party({navigation, route}: Props) {
   };
 
   return (
-    <SafeAreaView className="bg-gray-800 items-center h-full justify-center">
+    <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center">
       <BackButton />
       <Text
         className="text-3xl mt-20 text-gray-200 font-bold"

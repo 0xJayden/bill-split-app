@@ -1,7 +1,8 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction, useEffect} from 'react';
 import {MemberType} from '../types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Kind} from '../context/party-context';
 
 interface MemberResultsInterface {
   member: MemberType;
@@ -25,7 +26,7 @@ export default function MemberResults({
     <View className="flex-row justify-between p-4 bg-gray-900 rounded-lg shadow-sm w-5/6">
       <View className="justify-between">
         <Text
-          className="text-xl text-gray-200"
+          className="text-lg text-gray-400"
           style={{fontFamily: 'Nunito-Regular'}}>
           Items: {getAmountOfItems()}
         </Text>
@@ -50,12 +51,12 @@ export default function MemberResults({
       </View>
       <View className="space-y-4 items-end">
         <Text
-          className="text-xl text-gray-200"
+          className="text-lg text-gray-400"
           style={{fontFamily: 'Nunito-Regular'}}>
           Tax: ${member.results.taxOwed.toFixed(2)}
         </Text>
         <Text
-          className="text-xl text-gray-200"
+          className="text-lg text-gray-400"
           style={{fontFamily: 'Nunito-Regular'}}>
           Subtotal: ${member.results.subTotal.toFixed(2)}
         </Text>

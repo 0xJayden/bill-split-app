@@ -1,5 +1,5 @@
 import {View, Text, SafeAreaView, FlatList} from 'react-native';
-import React, {useContext, useLayoutEffect} from 'react';
+import React, {useContext} from 'react';
 import {PartyContext} from '../context/party-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
@@ -30,18 +30,18 @@ export default function Results({navigation}: Props) {
 
   const totalToal = () => {
     let total = 0;
+    party.forEach(m => (total += m.results.total - m.results.tip));
+    return total.toFixed(2);
+  };
+
+  const finalTotal = () => {
+    let total = 0;
     party.forEach(m => (total += m.results.total));
     return total.toFixed(2);
   };
 
-  useLayoutEffect(() =>
-    navigation.setOptions({
-      headerShown: false,
-      animation: 'slide_from_bottom',
-    }),
-  );
   return (
-    <SafeAreaView className="bg-gray-800 items-center h-full justify-center">
+    <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center">
       <BackButton />
       <Text
         className="text-3xl mt-10 text-gray-200 font-bold"
@@ -61,22 +61,19 @@ export default function Results({navigation}: Props) {
             <View className="flex-row justify-between">
               <View>
                 <Text
-                  className="text-xl text-gray-200  mb-4"
+                  className="text-lg text-gray-400  mb-4"
                   style={{fontFamily: 'Nunito-Regular'}}>
-                  Tax:{' '}
-                  <Text className="text-gray-200">
-                    ${item.results.taxOwed.toFixed(2)}
-                  </Text>
+                  Tax: ${item.results.taxOwed.toFixed(2)}
                 </Text>
                 <Text
-                  className="text-xl text-gray-200 "
+                  className="text-lg text-gray-400 "
                   style={{fontFamily: 'Nunito-Regular'}}>
                   Tip: ${item.results.tip.toFixed(2)}
                 </Text>
               </View>
               <View className="items-end">
                 <Text
-                  className="text-xl text-gray-200  mb-4"
+                  className="text-lg text-gray-400  mb-4"
                   style={{fontFamily: 'Nunito-Regular'}}>
                   Subtotal: ${item.results.subTotal.toFixed(2)}
                 </Text>
@@ -101,27 +98,33 @@ export default function Results({navigation}: Props) {
         </Text>
         <View className="flex-row justify-between">
           <View>
-            <Text
+            {/* <Text
               className="text-xl text-gray-200  mb-4"
               style={{fontFamily: 'Nunito-Regular'}}>
               Tax: <Text className="text-gray-200">${totalTax()}</Text>
-            </Text>
+            </Text> */}
             <Text
               className="text-xl text-gray-200 "
               style={{fontFamily: 'Nunito-Regular'}}>
-              Tip: ${totalTip()}
+              Tip: <Text className="text-green-500">${totalTip()}</Text>
             </Text>
           </View>
           <View className="items-end">
-            <Text
+            {/* <Text
               className="text-xl text-gray-200  mb-4"
               style={{fontFamily: 'Nunito-Regular'}}>
               Subtotal: ${totalSubtotal()}
+            </Text> */}
+            <Text
+              className="text-xl text-gray-200 mb-4"
+              style={{fontFamily: 'Nunito-Regular'}}>
+              Total: <Text className="text-green-500">${totalToal()}</Text>
             </Text>
             <Text
               className="text-xl text-gray-200 "
               style={{fontFamily: 'Nunito-Regular'}}>
-              Total: <Text className="text-green-500">${totalToal()}</Text>
+              Final Total:{' '}
+              <Text className="text-green-500">${finalTotal()}</Text>
             </Text>
           </View>
         </View>

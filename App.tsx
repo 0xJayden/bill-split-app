@@ -31,7 +31,11 @@ const App = () => {
           <Stack.Screen name="Tax" component={Tax} />
           <Stack.Screen name="Party" component={Party} />
           <Stack.Screen name="Member" component={Member} />
-          <Stack.Screen name="Results" component={Results} />
+          <Stack.Screen
+            name="Results"
+            component={Results}
+            options={{presentation: 'modal', headerShown: false}}
+          />
         </Stack.Navigator>
       </PartyContext.Provider>
     </NavigationContainer>
