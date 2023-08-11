@@ -7,11 +7,11 @@ const BackButton: React.FC = () => {
 
   return (
     <TouchableOpacity
-      className="self-start absolute top-10 left-10 z-10"
+      className="self-start absolute top-20 left-10 z-10"
       onPress={() => {
         navigation.goBack();
       }}>
-      <Icon name="arrow-back-ios" size={25} color="#00b0d6" />
+      <Icon name="arrow-back-ios" size={25} color="#f6f6f6" />
     </TouchableOpacity>
   );
 };

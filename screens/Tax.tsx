@@ -1,9 +1,16 @@
-import {Text, SafeAreaView, TextInput} from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {useContext, useState} from 'react';
 import {Kind, PartyContext} from '../context/party-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
 import BackButton from '../components/BackButton';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<StackParamList, 'Tax'>;
 
@@ -11,8 +18,22 @@ export default function Tax({navigation}: Props) {
   const [party, dispatch] = useContext(PartyContext);
   const [tax, setTax] = useState(0);
 
+  const insets = useSafeAreaInsets();
+
+  const submit = () => {
+    dispatch({type: Kind.SetTax, tax});
+    navigation.navigate('Party');
+  };
+
   return (
-    <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center space-y-4">
+    <View
+      style={{
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingRight: insets.right,
+        paddingLeft: insets.left,
+      }}
+      className="bg-gray-800 items-center flex-1 justify-center space-y-4">
       <BackButton />
       <Text
         className="text-3xl text-gray-200 font-bold"
@@ -28,12 +49,11 @@ export default function Tax({navigation}: Props) {
         onChangeText={text => {
           setTax(+text);
         }}
-        onSubmitEditing={() => {
-          dispatch({type: Kind.SetTax, tax});
-          navigation.navigate('Party');
-        }}
         keyboardType="numeric"
       />
-    </SafeAreaView>
+      <TouchableOpacity onPress={() => submit()}>
+        <Text className="text-gray-200">Submit</Text>
+      </TouchableOpacity>
+    </View>
   );
 }

@@ -27,7 +27,7 @@ export default function AddTip({setOpenTip, member}: AddTipInterface) {
     <Pressable
       onPress={() => setOpenTip(false)}
       className="h-full w-full absolute items-center justify-center z-10">
-      <View className="rounded bg-gray-900 py-4 px-8">
+      <View className="rounded bg-gray-900 py-4 mb-[150px] px-8">
         <Text
           className="text-3xl text-gray-200 font-bold text-center mb-4"
           style={{fontFamily: 'Nunito-Regular'}}>

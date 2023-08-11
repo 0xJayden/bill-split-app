@@ -1,4 +1,4 @@
-import {SafeAreaView, Text, TextInput} from 'react-native';
+import {SafeAreaView, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useContext, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../types';
@@ -10,6 +10,13 @@ export default function HowManyPeople({navigation}: Props) {
   const [amount, setAmount] = useState(0);
 
   const [party, dispatch] = useContext(PartyContext);
+
+  const submit = () => {
+    if (amount && amount > 0) {
+      dispatch({type: Kind.SetParty, amount});
+      navigation.navigate('Tax');
+    }
+  };
 
   return (
     <SafeAreaView className="bg-gray-800 items-center flex-1 justify-center space-y-4">
@@ -26,13 +33,12 @@ export default function HowManyPeople({navigation}: Props) {
           setAmount(+text);
         }}
         keyboardType="numeric"
-        onSubmitEditing={() => {
-          if (amount && amount > 0) {
-            dispatch({type: Kind.SetParty, amount});
-            navigation.navigate('Tax');
-          }
-        }}
       />
+      {amount > 0 && (
+        <TouchableOpacity onPress={() => submit()}>
+          <Text className="text-gray-200">Submit</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }

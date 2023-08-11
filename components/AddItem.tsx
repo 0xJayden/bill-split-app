@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react';
-import {TextInput, View} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Kind, PartyContext} from '../context/party-context';
 import {MemberType} from '../types';
 interface AddItemProps {
@@ -46,7 +46,7 @@ const AddItem: React.FC<AddItemProps> = ({member}) => {
   };
 
   return (
-    <View className="flex-row space-x-4">
+    <View className="flex-row items-center space-x-4">
       <TextInput
         className="border-b-cyan-500 border-b bg-gray-900 rounded p-2 min-w-[85px] mt-2 text-gray-200"
         style={{fontFamily: 'Nunito-Regular'}}
@@ -70,10 +70,12 @@ const AddItem: React.FC<AddItemProps> = ({member}) => {
         style={{fontFamily: 'Nunito-Regular'}}
         onChangeText={text => setPrice(text)}
         value={price}
-        onSubmitEditing={() => submitItem()}
         placeholder="Price"
         placeholderTextColor="gray"
       />
+      <TouchableOpacity onPress={() => submitItem()}>
+        <Text className="text-gray-200">Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };

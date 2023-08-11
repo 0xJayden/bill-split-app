@@ -1,10 +1,23 @@
-import {View, Text, SafeAreaView, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useContext} from 'react';
 import {PartyContext} from '../context/party-context';
-import BackButton from '../components/BackButton';
+// import BackButton from '../components/BackButton';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from '@react-navigation/native';
 
 export default function Results() {
   const [party, dispatch] = useContext(PartyContext);
+
+  const insets = useSafeAreaInsets();
+
+  const navigation = useNavigation();
 
   // const totalTax = () => {
   //   let tax = 0;
@@ -37,10 +50,24 @@ export default function Results() {
   };
 
   return (
-    <SafeAreaView className="bg-[#002929] items-center flex-1 justify-center">
-      <BackButton />
+    <View
+      style={{
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingRight: insets.right,
+        paddingLeft: insets.left,
+      }}
+      className="bg-gray-800 items-center flex-1 justify-center">
+      {/* <BackButton /> */}
+      <TouchableOpacity
+        className="self-start absolute top-10 left-10 z-10"
+        onPress={() => {
+          navigation.goBack();
+        }}>
+        <Icon name="arrow-back-ios" size={25} color="#f6f6f6" />
+      </TouchableOpacity>
       <Text
-        className="text-3xl mt-10 text-gray-200 font-bold"
+        className="text-3xl text-gray-200 font-bold"
         style={{fontFamily: 'Nunito-Regular'}}>
         Results
       </Text>
@@ -125,6 +152,6 @@ export default function Results() {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
